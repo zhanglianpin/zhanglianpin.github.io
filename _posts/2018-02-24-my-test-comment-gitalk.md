@@ -1,9 +1,9 @@
 ---
 layout: post
 title: 测试comment gitalk
-categories: Android
+categories: Test
 description: 测试Jekyll 系统
-keywords: Android, Emulator, TCP
+keywords: Test
 ---
 
 ### 测试标题

@@ -1,9 +1,9 @@
 ---
 layout: post
 title: 我的第一个Jekyll blog
-categories: Android
+categories: Test
 description: 测试Jekyll 系统
-keywords: Android, Emulator, TCP
+keywords: Test
 ---
 
 ### 测试标题
