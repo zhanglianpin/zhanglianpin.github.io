@@ -1,4 +1,4 @@
-# 码志
+# bahutou's blog
 
 我的个人博客：<http://bahutou>，欢迎参观，拿走。
 
