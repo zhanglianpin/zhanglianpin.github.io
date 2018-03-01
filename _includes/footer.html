@@ -34,15 +34,6 @@
     </footer>
     <!-- / footer -->
 	
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-114940195-1"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-114940195-1');
-	</script>
 
     <script src="{{ site.url }}/assets/vendor/share.js/dist/js/share.min.js"></script>
     <script src="{{ site.url }}/assets/js/geopattern.js"></script>
@@ -83,7 +74,7 @@
     {% if page.mathjax %}
     <script type="text/javascript" src="https://basis-learning.github.io/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     {% endif %}
-
+	<!-- Global site tag (gtag.js) - Google Analytics -->
     {% if site.google.analytics_id %}
     <div style="display:none">
       <script>
@@ -91,7 +82,7 @@
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
+		
         ga('create', '{{ site.google.analytics_id }}', 'auto');
         ga('send', 'pageview');
 

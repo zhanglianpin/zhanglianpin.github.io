@@ -430,9 +430,30 @@ Markdown默认没有数学公式的支持，当然需要第三方插件，最简
 
 #### 访问统计和字数统计等功能
 
-@zhanglianpin
+网站访问统计使用的是[Google analytics][Google-analytics]。打开网站，使用Google账号登陆，然后新建网络媒体资源。
+![Google-analytics-new](/images/posts/2018-02-27-build-blog-using-jekyll-and-github-pages/Google-Analytics-new.png "Google-analytics-new")
+成功后会生成一个USER-id，然后利用JS代码将访问情况上传到Google analytics center，你可以登陆 Google Analytics 进行查看分析访问情况。
 
-mojombo#1
+申请的user-id，放到_config.yml中作为变量，在_includes/foot.html中添加如下代码：
+
+```javascript
+{% if site.google.analytics_id %}
+    <div style="display:none">
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', {% raw %}'{{ site.google.analytics_id }}'{% endraw %}, 'auto');
+        ga('send', 'pageview');
+
+      </script>
+    </div>
+    {% endif %}
+```
+登陆Google analytics就可以查看网站访问统计信息，功能很强大的。
+![Google-analytics-result](/images/posts/2018-02-27-build-blog-using-jekyll-and-github-pages/Google-Analytics-result.png "Google-analytics-result")
 
 
 ### 引用资源
@@ -482,3 +503,4 @@ mojombo#1
 [github-zhanglianpin.io-blog-comments]: https://github.com/zhanglianpin/blog-comments
 [Creating-an-OAuth-App]: https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/
 [github-zhanglianpin.io-includes-header.html]: https://github.com/zhanglianpin/zhanglianpin.github.io/blob/master/_includes/header.html
+[Google-analytics]: https://analytics.google.com
