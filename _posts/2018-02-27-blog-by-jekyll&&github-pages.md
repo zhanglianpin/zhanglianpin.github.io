@@ -278,6 +278,34 @@ Jekyll 的核心其实是一个文本转换引擎。它的概念其实就是：�
 </table>
 </div>
 
+
+#### 使用Jekyll编写blog
+
+编写的blog动态内容要放到_post中，编写blog的markdown文件名的命名有些学问。必须满足如下的形式：
+
+```
+year-month-day-***-***-***.md
+```
+前面是年月日、后面是文件名称，各个单词之间使用"-"分割。
+
+文件内容有个header：
+
+```
+---
+layout: post
+title: 使用Jekyll和github-pages搭建个人blog系统
+categories: Jekyll&&github-pages
+description: 描述使用Jekyll和jithub-pages搭建个人博客的基本思路和方法
+keywords: Jekyll github-pages
+---
+```
+
+有这个header的文件才会被Jekyll解释其中的Liquid模板文件，否则Jekyll就当做是普通文件，直接转换成静态的HTML文件了。在这里主要定义一些一篇文章需要的名称、分类、关键字等等内容。其实编写语法是和YAML一样的，只不过放到了开头并用加上了特殊标识而已。在这里吗定义的变量，使用Liquid就可以使用。比如：
+
+```
+{% raw%} {{ page.title }} {% endraw%} 
+```
+
 #### 发布到github-pages
 
 将本地生成的网站目录结构上传到github仓库的master分支，我的用户仓库是zhanglianpin.github.io。
@@ -401,7 +429,10 @@ var gitalk = new Gitalk({
 
 			
 简单说明一下上述参数，前面说了gitalk使用的是github project的issue功能实现的，因此上述参数大部分都和project的issue有关系。
-repo指定那个github 仓库作为存储issue的地方，我的仓库是：[blog-comments][github-zhanglianpin.io-blog-comments]。owner和admin都是github的账号，我的是zhanglianpin。
+repo指定那个github 仓库作为存储issue的地方，我的仓库是：[blog-comments][github-zhanglianpin.io-blog-comments]。owner和admin都是github的账号，我的是zhanglianpin。id是在github上创建issue时使用的一个label，github的issue中label是有长度限制的(50个字符以内)。我们这里使用的page.url，因此建议发布博客时文件名不要太长。
+
+> 发布博客时文件名不要超过40个字符。
+
 clientID和clientSecret是用户授权github账号登陆第三方网站使用的。就像我现在的blog系统，如果在网站上点击使用github登陆按钮会跳转到授权页面，让你授权github账号登陆本blog的评论系统。
 ![gitalk-login](/images/posts/2018-02-27-build-blog-using-jekyll-and-github-pages/gitalk-login.png "gitalk-login")
 
@@ -420,12 +451,26 @@ clientID和clientSecret是用户授权github账号登陆第三方网站使用的
 Markdown默认没有数学公式的支持，当然需要第三方插件，最简单的方式当然是外部JS库喽。使用MathJax的方法很简单：
 
 ```javascript
-<script type="text/javascript"
-        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+{% raw %}
+	{% if page.mathjax  %} 
+		<script type="text/javascript" src="https://basis-learning.github.io/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	{% endif %}
+{% endraw %}
 ```
 
-我把这个外部js库放在了Jekyll的[_inclus/header.html][github-zhanglianpin.io-includes-header.html]。
+我把这个外部js库放在了Jekyll的[_inclus/foot.html][github-zhanglianpin.io-includes-foot.html],在发布blog时的header中设置page.mathjax就可以使用mathjax这个js库，没有数学公式的blog不设置此选项，也防止了没有数学公式的blog加载mathjax。
+
+```yml
+---
+layout: post
+title: 聊聊量子计算机那些事
+categories: QuantumComputer
+description: 聊聊量子计算机那些事
+keywords: 量子计算机 量子算法
+mathjax: true
+---
+
+```
 
 
 #### 访问统计和字数统计等功能
@@ -502,5 +547,5 @@ Markdown默认没有数学公式的支持，当然需要第三方插件，最简
 [zhanglianpin.github.io-_config.yml]: https://github.com/zhanglianpin/zhanglianpin.github.io/blob/master/_config.yml
 [github-zhanglianpin.io-blog-comments]: https://github.com/zhanglianpin/blog-comments
 [Creating-an-OAuth-App]: https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/
-[github-zhanglianpin.io-includes-header.html]: https://github.com/zhanglianpin/zhanglianpin.github.io/blob/master/_includes/header.html
+[github-zhanglianpin.io-includes-foot.html]: https://github.com/zhanglianpin/zhanglianpin.github.io/blob/master/_includes/foot.html
 [Google-analytics]: https://analytics.google.com
