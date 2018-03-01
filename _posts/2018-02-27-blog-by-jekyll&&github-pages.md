@@ -345,9 +345,96 @@ Fork 本项目之后，还需要做一些事情才能让你的页面「正确」
 
 #### 评论系统使用gitalk
 
+Jekyll的工作模式意味着像评论这样的系统必须借助第三方评论插件，我选择使用了[gitalk][gitalk]，一个使用github自带的issue系统做的评论插件，不过只支持github用户登录、评论。还好吧，现在没有github账号的程序员也不多了。使用gitalk涉及到两个问题：1，自己的blog如何加载gitalk并显示？2，如何授权使用github用户登录自己的blog评论系统进行评论？
+
+第一个问题比较简单，gitalk官网的install说明里说的比较清楚，使用links方式进行从外网加载到本地，在本地执行简单逻辑功能。
+
+```javascript
+<link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+```
+融合到Jekyll中使用的是[_inclus/comments.html][github-zhanglianpin.io-includes-comments.html]这个文件。
+
+```javascript
+var gitalk = new Gitalk({
+            id: 'page.url',
+            clientID: 'clientID',
+            clientSecret: 'clientSecret',
+            repo: 'repo',
+            owner: 'owner ',
+            admin: ['owner'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+```
+
+初始化gitalk时需要一些参数，因为这些参数不用的blog需要使用自己的github账号等一些信息，因此是变量。这些参数通过Liquid模板语言提取出来作为了变量放在了格式化数据YAML文件[_config.yml][zhanglianpin.github.io-_config.yml]中。具体参数如下：
+
+```
+# https://github.com/gitalk/gitalk#install
+gitalk:
+    owner: zhanglianpin
+    repo: blog-comments
+    clientID: decb151c48f4a658ec81
+    clientSecret: c2a95f788d773b3a25b68d0a3f25b78bedc80370
+```
+
+参考liquid语法很容易知道，引用上述变量的方法：
+
+```javascript
+{% raw %}
+var gitalk = new Gitalk({
+            id: '{{ page.url }}',
+            clientID: '{{ site.gitalk.clientID }}',
+            clientSecret: '{{ site.gitalk.clientSecret }}',
+            repo: '{{ site.gitalk.repo }}',
+            owner: '{{ site.gitalk.owner }}',
+            admin: ['{{ site.gitalk.owner }}'],
+            labels: ['gitment'],
+            perPage: 50,
+        })
+        gitalk.render('gitalk-container')
+		
+{% endraw %}
+
+```
+
+			
+简单说明一下上述参数，前面说了gitalk使用的是github project的issue功能实现的，因此上述参数大部分都和project的issue有关系。
+repo指定那个github 仓库作为存储issue的地方，我的仓库是：[blog-comments][github-zhanglianpin.io-blog-comments]。owner和admin都是github的账号，我的是zhanglianpin。
+clientID和clientSecret是用户授权github账号登陆第三方网站使用的。就像我现在的blog系统，如果在网站上点击使用github登陆按钮会跳转到授权页面，让你授权github账号登陆本blog的评论系统。
+![gitalk-login](/images/posts/2018-02-27-build-blog-using-jekyll-and-github-pages/gitalk-login.png "gitalk-login")
+
+这个clientID和clientSecret是你自己在github申请的。具体的申请步骤见[Creating an OAuth App][Creating-an-OAuth-App]。
+具体填写内容可能比较关键，以我的blog为例，我写的参数如下：
+
+![Creating-an-OAuth-App](/images/posts/2018-02-27-build-blog-using-jekyll-and-github-pages/Creating-an-OAuth-App.png "Creating-an-OAuth-App")
+
 #### 搜索使用JS库
+
+搜索使用的也是JS库的方式，只能搜索文章标题。关于搜索的代码还没分析，分析之后再分享，权当了解一下JavaScript语言了。
+
+
 #### 数学公式支持使用JS库-MathJax
+
+Markdown默认没有数学公式的支持，当然需要第三方插件，最简单的方式当然是外部JS库喽。使用MathJax的方法很简单：
+
+```javascript
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+```
+
+我把这个外部js库放在了Jekyll的[_inclus/header.html][github-zhanglianpin.io-includes-header.html]。
+
+
 #### 访问统计和字数统计等功能
+
+@zhanglianpin
+
+mojombo#1
+
+
 ### 引用资源
 
 1. [jekyll](https://jekyllrb.com/ )
@@ -357,7 +444,9 @@ Fork 本项目之后，还需要做一些事情才能让你的页面「正确」
 5. [yaml](http://yaml.org/)
 6. [RubyGems](https://rubygems.org/)
 7. [bundler](http://bundler.io/)
-8. [使用Jekyll&&github-pages搭建的blog列表](https://github.com/jekyll/jekyll/wiki/Sites)
+8. [Gitalk](https://github.com/gitalk/gitalk/)
+9. [MathJax](https://www.mathjax.org/)
+10. [使用Jekyll&&github-pages搭建的blog列表](https://github.com/jekyll/jekyll/wiki/Sites)
 
 
 
@@ -387,3 +476,9 @@ Fork 本项目之后，还需要做一些事情才能让你的页面「正确」
 [BASH-WSL]: https://msdn.microsoft.com/en-us/commandline/wsl/about
 [yaml]: http://yaml.org/
 [mzlogin]: https://github.com/mzlogin/mzlogin.github.io
+[gitalk]: https://github.com/gitalk/gitalk/
+[github-zhanglianpin.io-includes-comments.html]: https://github.com/zhanglianpin/zhanglianpin.github.io/blob/master/_includes/comments.html
+[zhanglianpin.github.io-_config.yml]: https://github.com/zhanglianpin/zhanglianpin.github.io/blob/master/_config.yml
+[github-zhanglianpin.io-blog-comments]: https://github.com/zhanglianpin/blog-comments
+[Creating-an-OAuth-App]: https://developer.github.com/apps/building-oauth-apps/creating-an-oauth-app/
+[github-zhanglianpin.io-includes-header.html]: https://github.com/zhanglianpin/zhanglianpin.github.io/blob/master/_includes/header.html
