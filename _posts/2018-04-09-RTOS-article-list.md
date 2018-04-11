@@ -44,7 +44,14 @@ RTOS提供了一个对程序员来说更好用的抽象的计算机，这个抽�
 	
 # 目录
 
+## 感谢μCOS的作者Jean J.Labrosse
+
+[感谢μCOS的作者Jean J.Labrosse](http://www.bahutou.cn/2018/04/11/RTOS-article-thanks-to-author/)
+
 ## 硬件运行环境和μCOS版本说明
+
+[硬件运行环境和μCOS版本说明](http://www.bahutou.cn/2018/04/11/RTOS-running-env-and-μCOS-version/)
+
 ## 依赖的知识点
 ### 操作系统&&实时操作系统
 ### 硬件平台有关&&平台无关
