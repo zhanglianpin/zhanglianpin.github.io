@@ -48,12 +48,12 @@ mathjax: true
 ### 为什么要研究量子计算机？
 计算机可以实现高速的计算，那是否意味着一切可计算的问题都能被计算机解决呐？我看未必，因为解决问题是人类的事情，人类需要把问题抽象---提出解决的方法---转换成具体的计算步骤-----得出结果----还原成现实世界的具体操作。计算机仅仅是一个计算工具罢了，你让它咋计算它就咋计算☺☺☺。所以关键问题是人怎么提出有意义的问题，然后再提出解决步骤解决之。解决问题的步骤在计算机科学领域有一个专有行话---算法。针对某些问题，我们找到了比较好的算法，还有一些问题虽然有算法，但是算法不够好。那位同学举手了，是不是想问：“算法好不好我咋知道？” 。这个问题其实也好回答，能解决你的问题就是好算法。但是更通用的评判一个算法是好算法的方法是：随着待解决问题的规模逐渐变大时，你所需要的资源（运算次数、存储空间）成对数、线性、多项式增长。就是说，这个算法对解决统一类型的小问题、大问题都有效。我们大家对各类常见的增长模式有无思考？我从慢到快排个序：对数（log）、线性、多项式（ $$n^2 、n^3 $$ etc ）、指数（$$e^x$$）、$$n!$$ 。为表示诚意，还是来张图吧。
 
-![各种算法复杂度](http://img.blog.csdn.net/20180129111008896?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![各种算法复杂度](/images/posts/2018-02-26-talk-about-quantum-computer/algorithm-complexity.png)
 
 大家可以看看，随着问题规模的线性增长，算法运算次数的增长模型里最猛烈的是$$n!$$ ,简直不可理喻，这货增长的实在是太快了，可以自己实际计算试试。$$3!=6 $$，但是$$20!=2432902008176640000$$。
 大家注意看，和它突飞猛进的势头差不多的是$$2^n$$，$$2^2=4 $$ ，但是$$2^{20}=1048576$$
 关于指数增长模型，有一个很著名的故事：国际象棋和米粒的故事。故事就不讲了，上张图看看吧。
-![国际象棋和米粒](http://img.blog.csdn.net/20180129113615835?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![国际象棋和米粒](/images/posts/2018-02-26-talk-about-quantum-computer/chess_and_rice.png)
 
 怎么样，还是挺震惊吧。
 
@@ -61,7 +61,7 @@ mathjax: true
 > 真是人比人得死，货比货得扔。
 
 “等会，你问的问题是为什么研究量子计算，你却给我讲解算法复杂度，骗子。”哎，那位同学你先把枪放下，咱有话好好说。啰里啰嗦说了这么多，其实就是想引出算法复杂度的分类问题。直接上张图吧。
-![问题分类](http://img.blog.csdn.net/20180129113124783?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![问题分类](/images/posts/2018-02-26-talk-about-quantum-computer/P_NP.png)
 
 人类社会需要解决的问题千千万万，但是仔细分分类，也没几种。P、NP、NPC。P（polynomial）问题是复杂度是多项式一类的问题，比如$$O(n^2)$$、$$O(n^3)$$ 等等。NP（non polynomial）问题，这一类问题具有的特点就是：给一个答案，很容易就能验证正确与否，但是要找到正确答案却需要非多项式的时间复杂度（指数复杂度）。这一类问题大部分都为找最优解的问题，比如：走迷宫找最短路径、吃饭的时候如何安排座位等等问题。一旦一个问题目前能找到的算法的复杂度是指数级的，那就意味着问题规模稍微大一点，你的运算量就是巨大的，有可能全世界的计算机都凑到一块，几百年也计算不完。那基本上就认为这个问题不可解。关于N problem 、NP problem 问题请参考[N问题、NP问题](http://www.matrix67.com/blog/archives/105) 。
 了解了上述情况，我们知道了，**有些问题不是你想解，想解就能解的**。目前有好多问题是不可解的（指数级的复杂度），那要想解决这些“不可解”问题，有以下几种方法：
@@ -71,7 +71,7 @@ mathjax: true
  
  在这样的背景下，研制像量子计算机这样的计算机就有了实际意义。传统的计算机新算法的发明速度到了瓶颈，传统的计算机计算速度提升也到了一定的瓶颈（量子隧穿效应）。
  还是有图有真相，上张图。
- ![经典计算机算法发展缓慢](http://img.blog.csdn.net/20180129134436419?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+ ![经典计算机算法发展缓慢](/images/posts/2018-02-26-talk-about-quantum-computer/classical_and_quantum_compter.png)
  
  而新研制的量子计算机再配上量子算法，在几个具体的问题领域表现出了较高的效率和活力。例子：shor算法可以将素因子分解问题从NP问题变成P问题。grover搜索算法把复杂度从N变成了$$\sqrt{N}$$。
  以上，是针对“为什么要研究量子计算机？”这个问题的一些思索。
@@ -93,7 +93,7 @@ $$1+2$$ 的例子我就不多说了。
 咦，又扯远喽。求平方根的方法很多，比较知名的有newton  method（牛顿迭代法）、二分法等等。这里具体就不做详细的分析和代码实现。有兴趣的可以自行实现，并分析不同算法的算法复杂度。
 重点介绍概率算法实现求 $$\pi$$ 。先插一句，概率算法的基本特征和基于微积分思想的算法一样，都是无限逼近原理。都有一个共性：无穷性。下面就来看看咋用概率思想算$$\pi$$ 。
 先来张图：
-![概率方法计算pi](http://img.blog.csdn.net/20180130091156528?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![概率方法计算pi](/images/posts/2018-02-26-talk-about-quantum-computer/pi_and_probability.png)
 
 一张图道出了所有的机密了吧，下面简要说明下基本步骤和思想。
 
@@ -126,9 +126,9 @@ PI=4.0*circle_count/npoints
 经典计算机发展了这么长的时间，已经发展出来了一套很完整的生态圈。我的意思是说有了很稳定的体系结构，有了自我扩展，解决实际问题的环境。用计算机解决实际问题一般分为分析现实问题------进行建模-----转换成计算机高级语言----编译、调试------用计算机运行------得出结果------转换成实际问题的解决方案。这一套流程本身就可以使用经典计算机来完成，像高级语言编码、编译调试、运行等环节都是在经典计算机上运行的。这就是经典计算机生态圈的含义，一种半自动化的机器，前人的伟大发明，着实让人为之惊叹，为之着迷。
 目前，量子计算机属于初期发展阶段。要想理解量子计算机的一些概念，最好的方法是和经典计算机做类比，以便更好地了解量子计算机。
 来张经典计算机的层次结构图。
-![经典计算机架构图](http://img.blog.csdn.net/20180129150218021?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![经典计算机架构图](/images/posts/2018-02-26-talk-about-quantum-computer/classical_computer_architecture.png)
 大家熟悉的冯诺依曼机：
-![冯诺依曼结构计算机](http://img.blog.csdn.net/20180129150434916?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![冯诺依曼结构计算机](/images/posts/2018-02-26-talk-about-quantum-computer/von_Neumann_computer_architecture.png)
 
 大家很明显可以看到，经典计算机体系结构是分层次设计开发的，越往上走越面向用户、也越简单，但同时牺牲了效率，用更容易利用牺牲了效率性。越往下走越面向电磁学理论、也越复杂，但同时掌握下层的知识可以更有效地利用硬件资源，但是这样不利于计算机工程化、推广化，也不利于用户使用计算机全身心解决现实世界的问题。
 经典计算机里，我们现在解决实际问题的编程语言都很高级，类似于自然语言，这就需要一个翻译，将高级语言表达的含义变换为计算机能够理解的指令，然后计算机去执行指令。不过这一整套计算机体系理论基础是布尔代数，工程化是图灵机和冯诺依曼等各位大神的思想。因此，这套体系发展到现在是一脉相承的。举例来说，他的理论基础和数学模型以及后来的工程化实现都在我们基础教育的范畴内。计算没有接受过系统的计算机知识培训的人在第一次接受这些概念时也会觉着比较自然。而且经典计算机的高级语言，确实屏蔽了很多计算机物理实现细节，我们使用的计算机实际上是经过抽象的虚拟机。你像高级语言里面的加法、乘法、循环等等概念和我们解决实际问题的思路和数学表达方法基本一致。
@@ -136,10 +136,10 @@ PI=4.0*circle_count/npoints
 目前量子计算机处于刚刚发展的阶段，也是有一些在经典计算机世界看起来很简单的事情，放到量子计算机世界里就需要很多新的idea和灵感来实现。比如：怎么让普通程序员使用量子计算机解决实际问题？量子计算机怎么存储数据？量子计算机整个体系结构是怎样的？等等还有很多很多问题。
 那有人问了，量子计算机是和经典计算机一样，是一种完全独立的生态圈吗？是和像经典计算机一样有一套完美的生态圈吗？答案是否定的。原因有两个：1，目前最具有可实现性的超导是需要超低温运行环境的（0.0145297 K）。2，qbits的扩展的工程并不容易。通俗地说，量子计算芯片需要绝对0度的运行环境，不能像经典计算机一样在正常的办公室就能使用，这一点对通用的量子计算机的推广有着制约。当然实现量子效应的物理载体有很多[超导、半导体、离子阱]，我们是以超导为例子，目前像IBM、INTEL的量子IC都是基于超导的。像经典计算机一样，最小的信息载体是bit，经典叫bit，量子世界叫qbit。经典计算机世界里几亿个bit的集成现在都不是问题，但是在量子计算机世界里，50qbits的制作都有困难。也就是说qbits的扩展还没有找到很好的工程化方法。基于以上两点原因，真正通用的量子计算机离我们还有一定的距离。现在发展的方向是在经典计算机的基础上加上一个专用的量子IC。对，也就是说目前我们见到的IBM的量子计算机从板级到编程等等各个方面都是异构[**经典计算机控制+量子IC**]的。
 
-![量子计算机架构](http://img.blog.csdn.net/20180129151749326?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![量子计算机架构](/images/posts/2018-02-26-talk-about-quantum-computer/quantum_computer_architecture.png)
 
 一种量子计算机的详细框图。
-![量子计算机的一种实现](http://img.blog.csdn.net/20180129152332920?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![量子计算机的一种实现](/images/posts/2018-02-26-talk-about-quantum-computer/quantum_computer_architecture_detail.png)
 
 好了，说这么多就是想引出，现在所说的量子计算机并不是传统意义上和经典计算机一样是个通用计算机，而是在经典计算机基础上怎加了个量子计算专用IC，为了管理这个QPU,还需要一系列的测试控制设备，我们编程控制的最底层也就是控制这个测控设备喽，因此我们讨论量子计算机、量子编程的时候应该时时刻刻记着**异构**这个词语。
 
@@ -151,12 +151,12 @@ PI=4.0*circle_count/npoints
 介绍的关键点有 ：如何描述单个qibt----如何描述多个qbits----什么是superposition（叠加态）-----什么是entanglement  （纠缠态）-----测量-----如何利用上述特性存储信息并加速运算。
 先说qbit，是一个量子物理学和信息科学融合的一个抽象概念。和bit进行对比着来比较好理解。表示信息一般都需要个载体，经典bit的载体是半导体开关电路。只能用来表示0或者1，这两个状态。而与之对应的qbit可以表示0或者1，也可以表示0和1的任意叠加态。嗯？不好理解，没事。我们在实际中也是用过“叠加”这样的思想解决过一些问题。比如物理分析中力的合成与分解、描述二维空间里的一个向量。这些都蕴含着叠加的思想。我们以描述二维空间中的一个向量为例，说明一些叠加的基本思想。
 来张图：
-![二维空间里的向量](http://img.blog.csdn.net/20180130110101306?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![二维空间里的向量](/images/posts/2018-02-26-talk-about-quantum-computer/line_in_2_dimension.png)
 
 我们描述一个苹果，一个橘子这种概念，自然数 $$1$$ 就够用了，再复杂点一个蛋糕分一半可以用有理数 $$1/2$$ 表示，再复杂点单位正方形的对角线怎么表示，用一个无理数$$\sqrt{2}$$ 就可以了，只不过需要点微积分的思想而已。那问题来了，一个空间里的向量怎么表示呐？你注意到了吗，前面的自然数、有理数、无理数都是只有大小属性的数，向量是一个量，具有大小和方向的量。自然地，使用复数来描述既有大小又有方向的量是比较可行的方法。复数有很多种表示方法，我最喜欢的是$$ae^{i\theta}$$ 这种表示方法。大小就是a，角度就是 $$\theta$$，比较自然。
 二维空间中的向量是可以使用复数来进行表达，但是三维空间的向量呐？这里是时候引入一些新的idea了，如何使用一种通用的方法描述不同维度空间里的向量？
 下面看个三维空间中的向量。
-![三维空间中的向量](http://img.blog.csdn.net/20180130111922842?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![三维空间中的向量](/images/posts/2018-02-26-talk-about-quantum-computer/line_in_3_dimension.png)
 
 我们可以构造一种新的数来描述这种空间中的量，显然这种方式不是最好的，这里蕴含着一些通用的idea，我们定义一种新的**数学实体**，这个实体由多个**数**组成。什么意思呐？显然地，我们描述空间中一个量需要有一个好的参考系，比如我们常用的x-y-z正交坐标系。有了参考系，我们就容易描述在这个空间里面的量。直觉告诉我们每一个在这个空间里的量都有3个分量，我们可以认为这个量有3个简单的量叠加态。对了，那位同学你说对了，这就是向量的一种表达方式。
 $$
@@ -293,7 +293,7 @@ $$\frac{|0\rangle+|1\rangle}{\sqrt{2}}$$
 
 
 来张Bloch球的图片：
-![Bloch球](http://img.blog.csdn.net/20180130151307105?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![Bloch球](/images/posts/2018-02-26-talk-about-quantum-computer/Qbit_and_bloch.png)
 
 Bloch球虽然是形象化工具，可以帮助理解qbit，我个人认为还是使用线性代数的space思维进行数学运算和表达，这样比较具有通用性。
 
@@ -347,7 +347,7 @@ $$
 \end{bmatrix}
 $$
 
-![向量的张量积](http://img.blog.csdn.net/20180131101811581?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![向量的张量积](/images/posts/2018-02-26-talk-about-quantum-computer/linear_algebra_and_handwrite.png)
 实在不知道怎么用LateX公式表达张量积的运算过程，看下这个手写的这款吧，一不小心让你们看到了我的笔记，看啥呐，赶紧收藏啊，坐等升值☺。
 定义这个张量积干啥？我的理解是要表示两个状态的同时存在的情况，像第一个qbit处于0态，并且第二个qbit同时也处于0态，怎么描述这样的一种情况呐？注意，这里关注的是真正的同时，这种状态可以用一个向量表示，也可以认为是两个向量的向量积。换句话说，若一个系统的整体状态能分解成两个向量的向量积，也说明这样的系统具有一定程度的离散性，测量这样的整体系统的其中一个Qbit时，并不影响另一个Qbit的状态。从空间角度来分析，一个Qbit张成的空间是一个 $$C^2$$ 空间，那要想表达具有两个Qbit 张成的空间，是一个 $$C^4$$ 空间。一个  $$C^4$$ 空间里的一个向量若能表达成两个 $$C^2$$ 空间里的向量的张量积的话，我们可以理解成第一个Qbit处于一个基态，同时另一个Qbit处于一个基态。这样可以简化系统的表示。
 用狄拉克符号表示：
@@ -413,7 +413,7 @@ $$\frac{|00\rangle + |11\rangle }{\sqrt{2}}$$
 
 ### 量子门操作
 描述量子计算机的模型，一般主流有3种：quantum circuit model , one way quantum computation model , adiabatic quantum computation model。IBM描述量子计算机的模型使用的是quantum circuit model（量子线路模型）。啥意思，就是在基态上添加各种门操作，然后通过测量得到结果。看图说话：
-![IBM量子线路模型](http://img.blog.csdn.net/20180131151138782?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![IBM量子线路模型](/images/posts/2018-02-26-talk-about-quantum-computer/IBM_composer.png)
 所以说，了解量子线路模型首先要先了解各种量子操作门。我们还是按照之前线性代数里space的思维模式进行各种门的解释。其实各种门就是针对空间里的向量的一种变换操作，也就是基的各种线性叠加。在量子计算机中的门的变换其实是各种旋转变换，即大小长度不变，只是在各种space里进行各种角度的旋转变换。用行话表达就是，量子计算机的门都是酉变换。
 > $$ U^\dagger U = 1 $$  ( $$A^\dagger$$ represents the complex conjugation and transpose of any matrix  $$A$$)。
 
@@ -490,9 +490,9 @@ $$
 矩阵乘以向量得出的结果还是个向量，不过这个向量是用单位阵作为参考系的。大家都同意标准，好交流嘛，毕竟针对同一个space你可以选出无穷多组基。使用不同的基表达的含义是等价的，只不过不同的问题使用合适的基可以简化问题的计算和解决。
 量子门有好多，我们从三类常用门里分别选择一个具有较强代表性的进行讲解。翻转门派----Pauli Operators（泡利门），旋转派----Hadamard gate(阿达马门)，多	Qbits控制门----CNOT门。
 泡利门这一派主要包括X Y Z 3种门。
-![泡利门](http://img.blog.csdn.net/20180131162501915?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![泡利门](/images/posts/2018-02-26-talk-about-quantum-computer/quantum_gate_X_Y_Z.png)
 我们选择X门进行讲解，是不是很简单，和我们上面举例子的门长的一模一样。只不过，向量是由复数组成的，直接实例化对应到旋转有一定难度，不过有了bloch球的实例化辅助也好理解：以X轴作为转轴，旋转了$$\pi$$。
-![X门的bloch球](http://img.blog.csdn.net/20180131163017799?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![X门的bloch球](/images/posts/2018-02-26-talk-about-quantum-computer/x_gate_detail.png)
 另一个有意思的量子操作门是Hadamard gate(阿达马门)，这一系列是旋转阵。其实，翻转阵也是特殊的旋转阵。这种矩阵都是正交单位阵，组成这些阵的每个向量都是单位的，和其他向量都是正交的。Hadamard gate之所以叫这个名字，是因为是Hadamard 这哥们发现的构造这种标准正交阵的方法。怎么构造呐？矩阵的元素只有1或者-1，且向量是单位的。各位看官且看：
 $$ \frac{1}{\sqrt{2}}
 \begin{bmatrix} 
@@ -529,7 +529,7 @@ $$ \frac{1}{\sqrt{2}}
 \end{bmatrix}
 $$
 这种H门在bloch球的实例化是什么样的呐？
-![H门的bloch球实例化](http://img.blog.csdn.net/20180131172619597?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![H门的bloch球实例化](/images/posts/2018-02-26-talk-about-quantum-computer/h_gate_detail.png)
 还有一个量子门是CNOT门。这个很简单，是一个双Qbit门。
 $$
 \begin{bmatrix} 
@@ -610,11 +610,11 @@ $$
 ### 量子编程
 前面说了，目前阶段的量子计算机都为经典计算机+量子芯片的异构结构。为了管理这个量子芯片,还需要一系列的测试控制设备，我们编程控制的最底层也就是控制这个测控设备喽，因此我们讨论编程架构的时候应该时时刻刻记着**异构** 这个词语。
 量子计算机的编程架构框图：
-![量子计算机编程架构框图](http://img.blog.csdn.net/20180131144817865?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![量子计算机编程架构框图](/images/posts/2018-02-26-talk-about-quantum-computer/quantum_program_structure.png)
 其实，量子计算机编程框架的研究是一个很活跃的领域，有很多个人和机构都在推出各种编程架构和语言框架。我们以IBM的编程框架为例：
-![IBM量子计算机编程架构图](http://img.blog.csdn.net/20180131145100002?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![IBM量子计算机编程架构图](/images/posts/2018-02-26-talk-about-quantum-computer/quantum_program_structure02.png)
 详细点的图：
-![IBM量子计算机编程框架细节图](http://img.blog.csdn.net/20180131145310304?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemhhbmdsaWFucGlu/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+![IBM量子计算机编程框架细节图](/images/posts/2018-02-26-talk-about-quantum-computer/IBM_quantum_program_structure.png)
 关于这个的资料请参考：[QISKit](https://github.com/QISKit)
 这里需要注意的是，虽然我们使用的量子编程语言是Python、Q#这样的高级语言，但因为量子算法并不使用经典算法的思想，而是一套新的思维方法，故量子编程实际上还是利用量子操作门来操作Qbits。在解决问题上，本质上的思维还处于Qasm这一级别。但目前确实也看到一些通用量子库的研究，比如量子算法里快速傅里叶变换是一个很基本的操作，因此有些编程框架内将这些作为通用的编程库来使用。再比如，有一些特定领域有可能产生完全屏蔽掉qbits的编程模型，但也仅仅限制在很小的领域内。
 总之，目前的情况，量子计算机并没有向通用计算机的方向发展，而是向着辅助经典计算机的辅助单元去发展的。而且现在看来经典计算机在解决人机交互，低速运算领域已经能很好地完成工作，并不会完全被量子计算机替代。当然，随着量子计算机技术的发展，量子计算机有可能成为通用计算机并普及，到那时候的量子计算机编程也许就会想现在的经典计算机一样，只关心问题就好了，怎么转化为计算机能听懂的话完全是自动的。
