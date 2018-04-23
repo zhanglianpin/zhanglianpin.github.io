@@ -167,3 +167,10 @@ stm32_p103_demos使用gnu交叉编译器编译，编译器下载链接：[GNU Ar
 
 官网上的开发环境一般是基于Keil 或者IAR的，这种集成开发环境适合工程开发，并不适合入门学习，因为好多东西都自动化了，不利于学习者学习掌握核心重点，因此我们使用GNU Tools(GCC、GDB)来做编译、调试。我们使用的GNU tools 上面已经介绍了。
 
+# 引用资源
+
+1. [STM32仿真软件qemu_stm32](https://github.com/zhanglianpin/qemu_stm32)
+2. [P103开发板测试代码](https://github.com/zhanglianpin/stm32_p103_demos)
+3. [P103开发板资料下载地址](https://www.olimex.com/Products/ARM/ST/STM32-P103/)
+4. [STM32-SOC-STM32F103RB资料地址](http://www.st.com/en/microcontrollers/stm32f103rb.html)
+5. [uCOS资料下载](https://www.micrium.com/)
