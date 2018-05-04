@@ -152,13 +152,41 @@ integratorcp         ARM Integrator/CP (ARM926EJ-S)
 > stm32-maple          OPEN SOURCE HARDWARE MAPLE / ARDUINO LIKE DEVELOPMENT BOARD
 > stm32-p103           Olimex STM32 p103 Dev Board
 
-因我们有基于Olimex STM32 p103 Dev Board和GNU编译环境的demo，因此选择Olimex STM32 p103 Dev Board这款仿真的STM32开发板。
+最近又查阅了些关于Cortex-m3使用GNU Toolchain开发的相关资料，发现了一个支持大部分Cortex-m3 处理器的改进版[QEMU](https://github.com/zhanglianpin/qemu)。支持绝大部分基于Cortex-m3的开发板。
 
-stm32_p103_demos使用gnu交叉编译器编译，编译器下载链接：[GNU Arm Embedded Toolchain](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads)
+```sh
+qemu-system-gnuarmeclipse -M help
+```
 
-编译器的安装和QEMU路径的设置等问题，请参考Project stm32_p103_demos 的ReadMe文件。
+```sh
+Supported boards:
+  Maple                LeafLab Arduino-style STM32 microcontroller board (r5)
+  NUCLEO-F103RB        ST Nucleo Development Board for STM32 F1 series
+  NUCLEO-F411RE        ST Nucleo Development Board for STM32 F4 series
+  NetduinoGo           Netduino GoBus Development Board with STM32F4
+  NetduinoPlus2        Netduino Development Board with STM32F4
+  OLIMEXINO-STM32      Olimex Maple (Arduino-like) Development Board
+  STM32-E407           Olimex Development Board for STM32F407ZGT6
+  STM32-H103           Olimex Header Board for STM32F103RBT6
+  STM32-P103           Olimex Prototype Board for STM32F103RBT6
+  STM32-P107           Olimex Prototype Board for STM32F107VCT6
+  STM32F0-Discovery    ST Discovery kit for STM32F051 line
+  STM32F4-Discovery    ST Discovery kit for STM32F407/417 lines
+  STM32F429I-Discovery ST Discovery kit for STM32F429/439 lines
+  generic              Generic Cortex-M board; use -mcu to define the device
+```
+**这个针对Cortex-m3改进版的QEMU的详细介绍**[The GNU MCU Eclipse QEMU](https://gnu-mcu-eclipse.github.io/qemu/)。
+
+**GNU MCU Eclipse QEMU的COMMAND的使用方法**[The GNU MCU Eclipse QEMU command line options](https://gnu-mcu-eclipse.github.io/qemu/options/).
+
+**结论：**
+开发板选择Olimex STM32 p103，硬件模拟器选择[The GNU MCU Eclipse QEMU](https://gnu-mcu-eclipse.github.io/qemu/)。
+
+
+
 
 ## 软件环境
+
 
 软件使用 μCOS-III(V3.03.01),我们直接下载μCOS-III基于STM32开发板的版本。
 下载地址：
@@ -167,10 +195,23 @@ stm32_p103_demos使用gnu交叉编译器编译，编译器下载链接：[GNU Ar
 
 官网上的开发环境一般是基于Keil 或者IAR的，这种集成开发环境适合工程开发，并不适合入门学习，因为好多东西都自动化了，不利于学习者学习掌握核心重点，因此我们使用GNU Tools(GCC、GDB)来做编译、调试。我们使用的GNU tools 上面已经介绍了。
 
+## 开发环境
+
+编译器使用gnu交叉编译器编译，编译器下载链接：[GNU Arm Embedded Toolchain](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads)
+
+开发嵌入式软件准备环境还是挺繁琐又没技术含量的事情，当我接触了Docker之后，一切都改变了，Docker可以帮你快速部署开发环境，又不破坏其他的开发环境。Docker提供了OS级别上的运行环境隔离。关于Dcoker的基本概念和基本使用方法参见[Docker user manual](https://docs.docker.com/engine/docker-overview/)。
+
+因此，我计划发布两个Docker image：
+
+> [Build environment docker image]()
+
+> [Debug environment using qemu docker image]()
+
 # 引用资源
 
-1. [STM32仿真软件qemu_stm32](https://github.com/zhanglianpin/qemu_stm32)
+1. [STM32仿真软件](https://github.com/zhanglianpin/qemu)
 2. [P103开发板测试代码](https://github.com/zhanglianpin/stm32_p103_demos)
 3. [P103开发板资料下载地址](https://www.olimex.com/Products/ARM/ST/STM32-P103/)
 4. [STM32-SOC-STM32F103RB资料地址](http://www.st.com/en/microcontrollers/stm32f103rb.html)
 5. [uCOS资料下载](https://www.micrium.com/)
+6. [Develop embedded software using Docker](https://blog.feabhas.com/2017/09/introduction-docker-embedded-developers-part-1-getting-started/)
