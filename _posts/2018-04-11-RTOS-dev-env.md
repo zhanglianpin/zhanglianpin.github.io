@@ -150,6 +150,7 @@ integratorcp         ARM Integrator/CP (ARM926EJ-S)
 可以看到新添加了以下两个Cortex-M3的开发板：
 
 > stm32-maple          OPEN SOURCE HARDWARE MAPLE / ARDUINO LIKE DEVELOPMENT BOARD
+
 > stm32-p103           Olimex STM32 p103 Dev Board
 
 最近又查阅了些关于Cortex-m3使用GNU Toolchain开发的相关资料，发现了一个支持大部分Cortex-m3 处理器的改进版[QEMU](https://github.com/zhanglianpin/qemu)。支持绝大部分基于Cortex-m3的开发板。
@@ -203,9 +204,31 @@ Supported boards:
 
 因此，我计划发布两个Docker image：
 
-> [Build environment docker image]()
+> [Build environment docker image](https://hub.docker.com/r/zhanglianpin/stm32_compile_env/)
 
-> [Debug environment using qemu docker image]()
+> [Debug environment using qemu docker image](https://hub.docker.com/r/zhanglianpin/ucos_debug_env/)
+
+如果你访问Docker慢的话，请选择使用国内aliyun
+
+Build environment docker image：
+```sh
+docker pull registry.cn-hangzhou.aliyuncs.com/bahutou/stm32_compile_env
+```
+
+Debug environment using qemu docker image：
+```sh
+docker pull registry.cn-hangzhou.aliyuncs.com/bahutou/ucos_debug_env
+```
+
+关于这两个Docker image的具体使用方法具体见后面的使用qemu调试Cortex-M3 程序的demo。
+
+生成Docker image的Dockerfile 托管在github上，如果你想自己定制Docker image，你可以修改Dockerfile，然后自己动手build。
+
+Dockerfile地址：
+Build environment Dockerfile：[Build environment Dockerfile](https://github.com/zhanglianpin/stm32_compile_env)
+
+Debug environment Dockerfile：[Debug environment Dockerfile](https://github.com/zhanglianpin/ucos_debug_env)
+
 
 # 引用资源
 
