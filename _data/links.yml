@@ -1,13 +1,30 @@
-- name: 酷 壳
-  url: https://coolshell.cn/
-
-  
-- name: Galsang Tech
-  url: http://blog.galsang.org/
-
 - name: 张连聘的技术书单
   url: https://www.douban.com/doulist/46567527/
+
+- name: 酷 壳
+  url: https://coolshell.cn/
   
 - name: Jack Ganssle
   url: http://www.ganssle.com/
   
+- name: Sticky Bits
+  url: https://blog.feabhas.com/
+  
+  
+  
+
+  
+- name: Yet another enthusiast blog!
+  url: https://blog.yadutaf.fr/
+  
+- name: Blogs about Cloud, Virtualization and everything else under the sun
+  url: http://www.innervoice.in/blogs/
+  
+- name: Matrix67:The Aha Moments
+  url: http://www.matrix67.com/blog/  
+
+- name: Glenn K. Lockwood, Ph.D.
+  url: http://www.glennklockwood.com/ 
+  
+- name: SKORKS
+  url: https://www.skorks.com/

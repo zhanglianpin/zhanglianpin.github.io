@@ -183,7 +183,10 @@ Supported boards:
 **结论：**
 开发板选择Olimex STM32 p103，硬件模拟器选择[The GNU MCU Eclipse QEMU](https://gnu-mcu-eclipse.github.io/qemu/)。
 
+关于开发板的输入输出：一般嵌入式开发中不能使用通用lib库（提供基本的输入输出系统等），因为通用库是基于OS（Linux、Unix、Windos）提供的服务的。我们嵌入式开发有时候涉及到裸（bare metal）开发，那就得对程序的来龙去脉有更好的掌握。有的嵌入式集成开发环境（keil、DS-5）提供一定的IO库，为程序员提供标准的printf scanf等函数，使用串口作为物理输入输出接口。这样的话，针对不同的硬件开发板还需要处理uart的初始化和使用的细节问题，不是很方面。ARM提供了一个叫Semihosting的技术，程序运行在目标平台上，需要使用输入输出这些资源时，通过调试接口（JLINK）调用HOST开发主机的键盘输入资源和显示资源。我们使用的QEMU支持这个Semihosting技术，所有的输入输出都使用这项技术，解决了目标开发板的输入输出问题。这项技术之用在开发阶段，产品成型阶段当然要实现自己的IO喽。不过，我们这里仅仅Debug代码，因此使用Semihosting技术比较合适。一图胜千言：
+![Semihosting overview](/images/posts/2018-04-11-RTOS-dev-env/Semihosting.png "Semihosting overview")
 
+对这个技术感兴趣的可以看这里：[ARM Semihosting](http://www.keil.com/support/man/docs/armcc/armcc_pge1358787045051.htm)
 
 
 ## 软件环境
