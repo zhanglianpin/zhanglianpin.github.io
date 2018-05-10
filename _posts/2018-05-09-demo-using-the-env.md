@@ -2,12 +2,11 @@
 layout: post
 title: 基于Docker环境开发、调试嵌入式软件（Embedded Software develop/Debug using Docker）
 categories: RTOS-μCOS
-description: 使用一个具体的Demo来熟悉一下开发（using cross toolchain by docker）、调试环境（using qemu by docker）。
+description: 使用一个具体的Demo来熟悉一下开发（using cross toolchain by docker）、调试环境（using qemu by docker）
 keywords: RTOS μCOS
 ---
 
 本文使用一个具体的简单的Demo介绍此系列文章的Dev、Debug环境的使用方法，Dev、Debug环境都使用Docker技术提供OS层的环境隔离。以避免在搭建嵌入式开发环境上浪费时间，或者因搭建此嵌入式环境影响了其他开发环境。Docker技术可以解决以上这些困扰。开发环境使用Vi + GNU Cross  toolchain，测试环境使用Qemu仿真STM32-P103这款开发板。使用仿真软件仿真开发板也节省了大家购买硬件的开支，同时也方便在有即兴Idea时，随时进行验证。
-
 
 
 # 准备开发、调试环境
