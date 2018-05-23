@@ -2,7 +2,7 @@
 #   Main Configs   #
 # ---------------- #
 baseurl:
-url: http://www.bahutou.cn
+url: https://www.bahutou.cn
 date_format: "ordinal"
 title: bahutou
 subtitle: "追求卓越，自然心喜"
@@ -17,7 +17,7 @@ side_bar_repo_limit: 5
 # ---------------- #
 author: Linc Zhang
 organization: csdn
-organization_url: http://blog.csdn.net/zhanglianpin
+organization_url: https://blog.csdn.net/zhanglianpin
 github_username: zhanglianpin
 location: Jinan, China
 email: zhanglianpin@gmail.com
