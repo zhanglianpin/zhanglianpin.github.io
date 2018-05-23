@@ -60,7 +60,7 @@ docker pull registry.cn-hangzhou.aliyuncs.com/bahutou/stm32_compile_env
 
 Docker hub(官方镜像源)：
 ```sh
-docker pull zhanglianpin/zhanglianpin/ucos_debug_env:latest
+docker pull zhanglianpin/ucos_debug_env:latest
 ```
 
 Aliyun hub（阿里云镜像源）：
