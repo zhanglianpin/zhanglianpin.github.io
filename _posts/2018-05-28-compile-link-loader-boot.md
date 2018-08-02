@@ -156,6 +156,8 @@ Debug目录是个编译目录，里面包含各种Makefile。
 
 **编译&&链接:**
 
+当然是直接 `make` 喽。
+
 编译的模板，自己根据实际文件名进行修改
 ```sh
 arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -Og -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -ffreestanding -fno-move-loop-invariants -Wall -Wextra  -g3 -DDEBUG -DUSE_FULL_ASSERT -DTRACE -DOS_USE_TRACE_SEMIHOSTING_DEBUG -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER -DHSE_VALUE=8000000 -I"../include" -I"../system/include" -I"../system/include/cmsis" -I"../system/include/stm32f1-stdperiph" -std=gnu11
@@ -186,7 +188,7 @@ arm-none-eabi-g++ -mcpu=cortex-m3 -mthumb -Og -fmessage-length=0 -fsigned-char -
 ![Soc Memory map](/images/posts/2018-05-28-compile-link-loader-boot/STM32F103RBT6_Memory map.png)
 
 我们看到RO存储Flash Memory的地址段是：0x08000000--0x0801FFFF 共128K。
-RW存储SRAM的地址段是：0x20000000--0x20004C00 共20K。
+RW存储SRAM的地址段是：0x20000000--0x20004FFF 共20K。
 我们Soc的启动配置是从0x08000000地址开始启动。为节约RAM空间，我们启动时映像的代码段不搬运，直接读取Flash Memory，数据段需要可读写，因此需要将所有的数据段搬移到RAM中去。大致情况见下图：
 
 ![Load View&& Excute View](/images/posts/2018-05-28-compile-link-loader-boot/load_and_exec_view.png)
@@ -897,6 +899,72 @@ syscall的实现在 `bare_metal_hello_world/system/src/newlib/_syscalls.c`
 
 # 怎么利用Semihosting 实现的基本IO
 
+本项目中，基本的IO都使用Semihosting实现。打印功能，使用自己实现的trace_printf函数，没有使用newlib库的printf函数。newlib中的printf函数开销比较大，我们这个只是调试的时候需要简单的输出功能。因此，自己实现了一个简单的利用Semihosting做的打印输出功能。
+`bare_metal_hello_world/system/src/diag/Trace.c`
+
+实现了以下接口：
+```c
+  int
+  trace_printf(const char* format, ...);
+
+  int
+  trace_puts(const char *s);
+
+  int
+  trace_putchar(int c);
+
+```
+trace_printf底层会调用 Semihosting的实现函数 trace_write，`bare_metal_hello_world/system/src/diag/trace_impl.c`
+```c
+trace_write (const char* buf __attribute__((unused)),
+	     size_t nbyte __attribute__((unused)))
+{
+#if defined(OS_USE_TRACE_ITM)
+  return _trace_write_itm (buf, nbyte);
+#elif defined(OS_USE_TRACE_SEMIHOSTING_STDOUT)
+  return _trace_write_semihosting_stdout(buf, nbyte);
+#elif defined(OS_USE_TRACE_SEMIHOSTING_DEBUG)
+  return _trace_write_semihosting_debug(buf, nbyte);
+#endif
+
+  return -1;
+}
+```
+我们在编译时使用了OS_USE_TRACE_SEMIHOSTING_DEBUG 宏定义，因此会调用_trace_write_semihosting_debug函数，这个函数调用call_host实现了Semihosting的输出到Host主机的功能。
+
+`bare_metal_hello_world/system/include/arm/semihosting.h`
+```c
+static inline int
+__attribute__ ((always_inline))
+call_host (int reason, void* arg)
+{
+  int value;
+  asm volatile (
+
+      " mov r0, %[rsn]  \n"
+      " mov r1, %[arg]  \n"
+#if defined(OS_DEBUG_SEMIHOSTING_FAULTS)
+      " " AngelSWITestFault " \n"
+#else
+      " " AngelSWIInsn " %[swi] \n"
+#endif
+      " mov %[val], r0"
+
+      : [val] "=r" (value) /* Outputs */
+      : [rsn] "r" (reason), [arg] "r" (arg), [swi] "i" (AngelSWI) /* Inputs */
+      : "r0", "r1", "r2", "r3", "ip", "lr", "memory", "cc"
+      // Clobbers r0 and r1, and lr if in supervisor mode
+  );
+
+  // Accordingly to page 13-77 of ARM DUI 0040D other registers
+  // can also be clobbered. Some memory positions may also be
+  // changed by a system call, so they should not be kept in
+  // registers. Note: we are assuming the manual is right and
+  // Angel is respecting the APCS.
+  return value;
+}
+```
+
 
 # 如何利用 QEMU 实现模拟运行、调试
 调试环境的使用，在[基于Docker环境开发、调试嵌入式软件（Embedded Software develop/Debug using Docker）](http://www.bahutou.cn/2018/05/09/demo-using-the-env/)有详细的说明。
@@ -942,7 +1010,7 @@ the float type value temp =0x0.010000
 [led:red off]
 ```
 
-可以看到
+可以看到我们验证了malloc函数，可以正常工作。我们顺便验证了下全局变量和局部变量在RAM中的实际地址，test定义的是个Global的变量，可以看到地址是0x20000020，确实是在RAM Region定义的范围，地址确实是从0x20000000 开始用的。函数内的局部变量使用的是Stack的内存空间，从上面介绍的内容来看，Stack是从RAM高地址向低地址使用的，这里RAM最高地址是0x20004fff，我们local_test变量的地址是0x20004fd4，和预期情况一致。我们也测试了浮点数的打印，newlib本身没有启用浮点数的支持，要想使用浮点数的输入、输出功能，需要使用编译器链接选项 `-u _printf_float` 强制链接相关库函数。
 
 
 # 感谢
