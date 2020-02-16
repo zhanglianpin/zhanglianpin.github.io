@@ -16,3 +16,16 @@
 - sitename: 知乎
   name: zhanglianpin
   url: https://www.zhihu.com/people/zhanglianpin
+
+- sitename: 微信
+  name: zhanglianpin
+  url: zhanglianpin
+  
+  - sitename: 邮箱(国内)
+  name: zhanglianpin@126.com
+  url: zhanglianpin@126.com
+  
+    
+  - sitename: 邮箱(国国际)
+  name: zhanglianpin@gmail.com
+  url: zhanglianpin@gmail.com
